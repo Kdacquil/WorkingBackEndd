@@ -1,44 +1,56 @@
 <div class="content">
-    <h1>Onboarding Report</h1>
-  
-  
-    <!-- Employee List -->
-    <div class="employee-list">
-      <div *ngFor="let employee of filteredEmployees" class="employee-item">
-        <span><strong>{{ employee.name }}</strong></span>
-        <div class="employee-actions">
+  <h1>Onboarding Report</h1>
+
+  <!-- Employee Table -->
+  <table class="table-container">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Employment Type</th>
+        <th>Employment Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of filteredEmployees">
+        <td><strong>{{ employee.name }}</strong></td>
+        <td><strong>{{ employee.department }}</strong></td>
+        <td><strong>{{ employee.employmentType }}</strong></td>
+        <td><strong>{{ employee.employmentDate }}</strong></td>
+
+        <!-- <td>
           <button class="button" (click)="openModal(employee)">View Details</button>
+        </td> -->
+      </tr>
+      <tr *ngIf="filteredEmployees?.length === 0">
+        <td colspan="2" class="no-data">No employees found.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Employee Modal -->
+  <div class="modal-overlay" *ngIf="selectedEmployee">
+    <div class="modal-content pb-5">
+      <span class="close-btn" (click)="closeModal()">&times;</span>
+      <h2>{{ selectedEmployee.name }}</h2>
+      <div class="d-flex flex-row" style="max-width: 100%">
+        <div style="width: 50%;">
+          <p><strong>Email:</strong> {{ selectedEmployee?.email }}</p>
+          <p><strong>Employment Date:</strong> {{ selectedEmployee?.employmentDate }}</p>
+          <p><strong>Automated Notification:</strong> {{ selectedEmployee?.notification }}</p>
+        </div>
+        <div style="width: 50%; display: flex; justify-content: center;">
+          <!-- Employee Image in Modal -->
+          <img [src]="selectedEmployee?.profileImageUrl"
+               alt="No Image"
+               style="width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 3px solid #ccc;" />
         </div>
       </div>
-    </div>
-    <div *ngIf="filteredEmployees?.length === 0" class="no-data">
-      No employees found.
-    </div>
-  
-    <!-- Employee Modal -->
-    <div class="modal-overlay" *ngIf="selectedEmployee">
-      <div class="modal-content pb-5">
-        <span class="close-btn" (click)="closeModal()">&times;</span>
-        <h2>{{ selectedEmployee.name }}</h2>
-        <div class="d-flex flex-row" style="max-width: 100%">
-          <div style="width: 50%;">
-            <p><strong>Email:</strong> {{ selectedEmployee?.email }}</p>
-            <p><strong>Employment Date:</strong> {{ selectedEmployee?.employmentDate }}</p>
-            <p><strong>Automated Notification:</strong> {{ selectedEmployee?.notification }}</p>
-            </div>
-            <div style="width: 50%; display: flex; justify-content: center;">
-              <!-- Employee Image in Modal -->
-              <img [src]="selectedEmployee?.profileImageUrl"
-                   alt="No Image"
-                   style="width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 3px solid #ccc;" />
-            </div>
-        </div>
-        <div class="pt-3">
-          <button class="button" (click)="updateEmployee()">Update</button>
-          <button class="button mx-3" (click)="deleteEmployee()">Delete</button>
-          <button class="button" (click)="moveToOffboarding()">Move to Offboarding</button>
-        </div>
+      <div class="pt-3">
+        <button class="button" (click)="updateEmployee()">Update</button>
+        <button class="button mx-3" (click)="deleteEmployee()">Delete</button>
+        <button class="button" (click)="moveToOffboarding()">Move to Offboarding</button>
       </div>
     </div>
   </div>
-  
+</div>
