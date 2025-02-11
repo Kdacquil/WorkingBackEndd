@@ -1,0 +1,89 @@
+.offboarding-container {
+  margin-left: 250px;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  position: relative;
+}
+
+h4 {
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 20px;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.form-container {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+input, select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.user-icon {
+  width: 100px;
+  border-radius: 50%;
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background-color: #800020;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+button:hover {
+  background-color: #333;
+}
+
+/* Search Bar Positioned on the Right */
+.search-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 250px;
+}
+
+.search-results {
+  background: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+  position: absolute;
+  width: 100%;
+  z-index: 10;
+  display: none; /* Hides results initially */
+}
+
+.search-container input:focus + .search-results,
+.search-container input:not(:placeholder-shown) + .search-results {
+  display: block; /* Shows results when typing */
+}
+
+.search-item {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.search-item:hover {
+  background: #f1f1f1;
+}

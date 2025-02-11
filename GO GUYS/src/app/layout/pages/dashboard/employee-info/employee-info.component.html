@@ -1,0 +1,103 @@
+<div class="content">
+  <h1>Employee Information</h1>
+
+  <!-- Search Bar -->
+  <div class="search">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      (input)="searchEmployee(searchQuery)"
+      placeholder="Search employees"
+      class="search-box"
+    />
+  </div>
+
+  <!-- Employee List -->
+  <div class="employee-list">
+    <div *ngFor="let employee of filteredEmployees" class="employee-item">
+      <div class="profile-container">
+        <img [src]="employee.profileImageUrl || 'assets/default-profile.png'" alt="No Image" class="profile-img">
+      </div>
+      <div class="text-container">
+        <strong>{{ employee.name }}</strong>
+      </div>
+      <div class="employee-actions">
+        <button class="button" (click)="openModal(employee)">View Details</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="filteredEmployees?.length === 0" class="no-data">
+    No employees found.
+  </div>
+
+  <!-- Employee Modal -->
+  <div class="modal-overlay" *ngIf="selectedEmployee">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1>Employee Information</h1>
+        <span class="close-btn" (click)="closeModal()">&times;</span>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-image">
+          <img [src]="selectedEmployee.profileImageUrl || 'assets/default-profile.png'" alt="No Image">
+        </div>
+
+        <div class="modal-details">
+          <div class="info-group">
+            <label>Name:</label>
+            <input *ngIf="isEditing" type="text" [(ngModel)]="selectedEmployee.name" class="input-field" />
+            <span *ngIf="!isEditing">{{ selectedEmployee.name }}</span>
+          </div>
+
+          <div class="info-group">
+            <label>Email:</label>
+            <input *ngIf="isEditing" type="email" [(ngModel)]="selectedEmployee.email" class="input-field" />
+            <span *ngIf="!isEditing">{{ selectedEmployee.email }}</span>
+          </div>
+
+          <div class="info-group">
+            <label>Employment Date:</label>
+            <input *ngIf="isEditing" type="date" [(ngModel)]="selectedEmployee.employmentDate" class="input-field" />
+            <span *ngIf="!isEditing">{{ selectedEmployee.employmentDate }}</span>
+          </div>
+
+          <div class="info-group">
+            <label>Employment Type:</label>
+            <select *ngIf="isEditing" [(ngModel)]="selectedEmployee.employmentType" class="input-field">
+              <option value="">Select</option>
+              <option value="Full-time">Full-time</option>
+              <option value="Part-time">Part-time</option>
+              <option value="Probation">Probation</option>
+            </select>
+            <span *ngIf="!isEditing">{{ selectedEmployee.employmentType }}</span>
+          </div>
+
+          <div class="info-group">
+            <label>Department:</label>
+            <select *ngIf="isEditing" [(ngModel)]="selectedEmployee.department" class="input-field">
+              <option value="">Select</option>
+              <option value="School Of Business and Accountancy (SBA)">School Of Business and Accountancy (SBA)</option>
+              <option value="School Of Engineering and Architecture (SEA)">School Of Engineering and Architecture (SEA)</option>
+              <option value="School Of Arts and Sciences (SAS)">School Of Arts and Sciences (SAS)</option>
+              <option value="School Of Computing (SOC)">School Of Computing (SOC)</option>
+              <option value="School Of Hospitality and Tourism Management (SHTM)">School Of Hospitality and Tourism Management (SHTM)</option>
+              <option value="School Of Education (SED)">School Of Education (SED)</option>
+              <option value="School Of Nursing and Allied Medical Sciences (SNAMS)">School Of Nursing and Allied Medical Sciences (SNAMS)</option>
+              <option value="College of Criminal Justice Education and Forensics (CCJEF)">College of Criminal Justice Education and Forensics (CCJEF)</option>
+            </select>
+            <span *ngIf="!isEditing">{{ selectedEmployee.department }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="button" *ngIf="!isEditing" (click)="enableEditing()">Edit</button>
+        <button class="button" *ngIf="isEditing" (click)="saveUpdate()">Save</button>
+        <button class="button delete" (click)="deleteEmployee()">Delete</button>
+        <button class="button cancel" (click)="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

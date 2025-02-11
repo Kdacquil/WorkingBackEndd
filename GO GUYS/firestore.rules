@@ -1,0 +1,23 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // 🔹 Profile images - Each user can read/write ONLY their own profile image
+    match /profile_images/{userId}/{imageId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // 🔹 Offboarding documents - Each user can only upload their own files
+    match /offboarding/{employeeName}/{documentType}/{fileName} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null
+                   && request.auth.token.email_verified == true // Only verified users
+                   && (documentType == 'clearance' || documentType == 'certification');
+    }
+
+    // 🚨 REMOVE OR MODIFY THIS FOR PRODUCTION - Open access to all files (dangerous!)
+    // match /{allPaths=**} {
+    //   allow read, write: if true;
+    // }
+  }
+}

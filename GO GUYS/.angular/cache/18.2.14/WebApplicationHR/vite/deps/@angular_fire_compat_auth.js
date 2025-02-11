@@ -1,0 +1,34 @@
+import {
+  AngularFireAuth,
+  AngularFireAuthModule,
+  LANGUAGE_CODE,
+  PERSISTENCE,
+  SETTINGS,
+  TENANT_ID,
+  USE_DEVICE_LANGUAGE,
+  USE_EMULATOR,
+  ɵauthFactory
+} from "./chunk-NOKK3KCK.js";
+import "./chunk-LUSG572N.js";
+import "./chunk-NGVKORK2.js";
+import "./chunk-U5B2F46F.js";
+import "./chunk-3KOMAZYR.js";
+import "./chunk-USFZD6TX.js";
+import "./chunk-OE7PEGOX.js";
+import "./chunk-P4UHYYRR.js";
+import "./chunk-YSN7JSTZ.js";
+import "./chunk-IGY35UNU.js";
+import "./chunk-IYEYSCYL.js";
+import "./chunk-35ENWJA4.js";
+export {
+  AngularFireAuth,
+  AngularFireAuthModule,
+  LANGUAGE_CODE,
+  PERSISTENCE,
+  SETTINGS,
+  TENANT_ID,
+  USE_DEVICE_LANGUAGE,
+  USE_EMULATOR,
+  ɵauthFactory
+};
+//# sourceMappingURL=@angular_fire_compat_auth.js.map

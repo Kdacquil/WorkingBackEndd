@@ -1,0 +1,55 @@
+<section class="vh-100">
+
+  <div class="wrapper">
+    <header>
+        <div class="account-info" (click)="toggleAccount($event)" #accountContainer>
+            <i class="fas fa-user-cog account-icon"></i>
+            <span class="account-name">HR User</span>
+            <div class="account-popup" *ngIf="showAccount">
+                <a (click)="openAccountSettings()">Account Settings</a>
+                <a (click)="logout()">Logout</a>
+            </div>
+        </div>
+        <div class="header-content">
+            <img src="hau.ico" alt="HR Logo" class="logo">
+            <h1>Human Resource Management Office</h1>
+        </div>
+        <nav>
+            <ul class="nav-bar">
+                <span class="menu">
+                    <li><a routerLink="/home">Home</a></li>
+                    <li><a routerLink="/dashboard">Dashboard</a></li>
+                  </span>
+            </ul>
+        </nav>
+
+    </header>
+
+
+    <main>
+        <div class =main-content>
+        <section class="intro">
+            <p>The Holy Angel University HR Onboarding and Offboarding System streamlines employee transitions by automating onboarding and offboarding processes. Designed specifically for HR, it features real-time analytics, secure task management, and compliance with local regulations. The system reduces administrative work, enhances efficiency, and ensures a smooth experience for both new hires and departing employees.</p>
+        </section>
+
+        <section class="features">
+            <div class="feature">
+                <img src="Onata.jpg" alt="Onboarding Icon" style="width: 310px; height: auto;">
+                <a (click)="onboard()" class="button" style="display: block; margin-top: 1rem; background-color: #800020; color: white; padding: 10px 20px; text-align: center; border-radius: 20px; text-decoration: none;">Onboarding</a>
+            </div>
+            <div class="feature">
+                <img src="Offata.jpg" alt="Offboarding Icon" style="width: 310px; height: auto;">
+                <a (click)="onboard()" class="button" style="display: block; margin-top: 1rem; background-color: #800020; color: white; padding: 10px 20px; text-align: center; border-radius: 20px; text-decoration: none;">Offboarding</a>
+            </div>
+        </section>
+
+        </div>
+    </main>
+
+
+    <footer class="sticky-0">
+        <p>&copy; 2024 HR Department. All Rights Reserved.</p>
+    </footer>
+
+</div>
+</section>

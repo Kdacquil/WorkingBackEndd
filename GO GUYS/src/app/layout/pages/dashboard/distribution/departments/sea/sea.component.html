@@ -1,0 +1,26 @@
+<div class="content">
+    <i class="bi bi-arrow-left-short btn btn-outline-dark" (click)="goBack()">return</i>
+    <h1>School of Engineering and Architecture Employees</h1>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Employment Type</th>
+                    <th>Completed Task</th>
+                    <th>Pending Task</th>
+                    <th>Automated Notification</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr  *ngFor="let employee of filteredEmployees">
+                    <td>{{ employee.name }}</td>
+                    <td>{{ employee.employmentType }}</td>
+                    <td>{{ employee.completedTasks }}</td>
+                    <td>{{ employee.pendingTasks }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
