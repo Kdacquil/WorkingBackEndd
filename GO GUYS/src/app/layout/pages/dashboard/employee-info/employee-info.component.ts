@@ -42,6 +42,7 @@ export class EmployeeInfoComponent implements OnInit {
   enableEditing() {
     this.isEditing = true;
   }
+  
 
   saveUpdate() {
     if (this.selectedEmployee.id) {

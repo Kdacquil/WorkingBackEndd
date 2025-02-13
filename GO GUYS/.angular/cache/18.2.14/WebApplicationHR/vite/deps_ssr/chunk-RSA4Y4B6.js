@@ -1,8 +1,5 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
-  __rest
-} from "./chunk-KJEVBEMX.js";
-import {
   require_undici
 } from "./chunk-D5NCJWRM.js";
 import {
@@ -37,6 +34,16 @@ import {
   __superGet,
   __toESM
 } from "./chunk-LKDWXENB.js";
+
+// node_modules/tslib/tslib.es6.mjs
+function __rest(s, e) {
+  var t = {};
+  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+}
 
 // node_modules/@angular/fire/node_modules/@firebase/auth/dist/node-esm/totp-219bb96f.js
 var import_undici = __toESM(require_undici(), 1);
@@ -7591,4 +7598,4 @@ FetchProvider.initialize(import_undici3.fetch, import_undici3.Headers, import_un
    * limitations under the License.
    *)
 */
-//# sourceMappingURL=chunk-DUB6JJRZ.js.map
+//# sourceMappingURL=chunk-RSA4Y4B6.js.map

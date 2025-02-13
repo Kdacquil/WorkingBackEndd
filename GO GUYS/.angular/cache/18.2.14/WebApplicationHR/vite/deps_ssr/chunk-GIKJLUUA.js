@@ -133,7 +133,7 @@ var AngularFireAuth = class _AngularFireAuth {
   credential;
   constructor(options, name, platformId, zone, schedulers, useEmulator, settings, tenantId, languageCode, useDeviceLanguage, persistence, _appCheckInstances) {
     const logins = new import_rxjs.Subject();
-    const auth = (0, import_rxjs.of)(void 0).pipe((0, import_operators.observeOn)(schedulers.outsideAngular), (0, import_operators.switchMap)(() => zone.runOutsideAngular(() => import("./dist-SBFAUEFI.js"))), (0, import_operators.map)(() => ɵfirebaseAppFactory(options, zone, name)), (0, import_operators.map)((app) => ɵauthFactory(app, zone, useEmulator, tenantId, languageCode, useDeviceLanguage, settings, persistence)), (0, import_operators.shareReplay)({
+    const auth = (0, import_rxjs.of)(void 0).pipe((0, import_operators.observeOn)(schedulers.outsideAngular), (0, import_operators.switchMap)(() => zone.runOutsideAngular(() => import("./dist-2HDVBEDK.js"))), (0, import_operators.map)(() => ɵfirebaseAppFactory(options, zone, name)), (0, import_operators.map)((app) => ɵauthFactory(app, zone, useEmulator, tenantId, languageCode, useDeviceLanguage, settings, persistence)), (0, import_operators.shareReplay)({
       bufferSize: 1,
       refCount: false
     }));
@@ -308,4 +308,4 @@ export {
   AngularFireAuth,
   AngularFireAuthModule
 };
-//# sourceMappingURL=chunk-YMZVMQNT.js.map
+//# sourceMappingURL=chunk-GIKJLUUA.js.map

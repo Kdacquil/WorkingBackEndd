@@ -27,6 +27,7 @@ export class OffboardComponent implements OnInit {
       effectiveDate: ['', Validators.required],
       personalEmail: ['', [Validators.required, Validators.email]],
       exitInterview: ['', Validators.required],
+      recommendation: ['', Validators.required],
       automatedNotification: ['', Validators.required],
       clearanceStatus: ['', Validators.required],
       certificationStatus: ['', Validators.required]

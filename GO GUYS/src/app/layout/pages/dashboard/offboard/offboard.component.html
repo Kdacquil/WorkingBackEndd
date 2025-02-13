@@ -57,6 +57,7 @@
           <label>Personal Email:</label>
           <input type="email" formControlName="personalEmail" placeholder="Email@gmail.com" />
         </div>
+        
         <div class="form-group">
           <label>Exit Interviews</label>
           <select formControlName="exitInterview">
@@ -65,12 +66,24 @@
             <option value="Pending">Pending</option>
           </select>
         </div>
+
+        <div class="form-group">
+          <label>Recommendation</label>
+          <select formControlName="recommendation" >
+            <option value="">Select</option>
+            <option value="Rehire">Rehire</option>
+            <option value="Not Rehire">Not Rehire</option>
+          </select>
+          <textarea formControlName="recommendationComment"  placeholder="Comment..."></textarea>
+
+        </div>
         <div class="form-group">
           <label>Automated Notification</label>
           <select formControlName="automatedNotification">
             <option value="">Select</option>
             <option value="Yes">Yes</option>
             <option value="No">No</option>
+            
           </select>
         </div>
       </div>
