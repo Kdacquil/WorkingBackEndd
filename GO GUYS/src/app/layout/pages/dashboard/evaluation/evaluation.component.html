@@ -1,0 +1,150 @@
+<div class="content">
+    <h1 class="m-3">Evaluation</h1>
+  
+    <!-- Employee Table -->
+    <table class="table-container">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th></th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employee of filteredEmployees">
+            <td><strong>{{ employee.name }}</strong></td>
+            <td><button class="btn btn-outline-dark" (click)="openModal(employee)">Evaluate</button></td>
+        </tbody>
+    </table>
+
+    
+    <!-- Employee Modal -->
+    <div class="modal-overlay" *ngIf="selectedEmployee">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="text-center">Employee Performance Evaluation</h1>
+            <span class="close-btn" (click)="closeModal()">&times;</span>
+            </div>
+    
+            <div class="modal-body">
+
+        <div class="modal-details">
+            <div class="info-group">
+            <label>Name: <span>{{ selectedEmployee.name }}</span></label>
+            </div>
+
+            <div class="">
+            <p class="text-danger">Evaluation Rating</p>
+
+                <!-- Employee Table -->
+                    <table class="table-container">
+                        <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Rating Type</th>
+                            <th>Points</th>
+                        </tr>  
+                        </thead>
+                        
+                        <tbody>
+                        <!-- <tr *ngFor="let employee of filteredEmployees">
+                            <td><strong>{{ employee.name }}</strong></td>
+                            <td><button class="btn btn-outline-dark" (click)="openModal(employee)">Evaluate</button></td></tr> -->
+                            
+                            <tr>
+                                <td><h6 class="ms-3 my-1">PROFESSIONAL SKILLS</h6></td>
+                                <td></td>
+                                <td></td>
+
+                            </tr>
+                            <tr>
+                                <td>Communicates learning outcomes with the class.</td>
+                                <td>
+                                    <select class="form-select">
+                                        <option value="0">0 - Not Applicable</option>
+                                        <option value="4">4 - Very Satisfied</option>
+                                        <option value="3">3 - Satisfied</option>
+                                        <option value="2">2 - Dissatisfied</option>
+                                        <option value="1">1 - Very Dissatisfied</option>
+                                    </select>
+                                </td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>Communicates learning outcomes with the class.</td>
+                                <td>
+                                    <select class="form-select">
+                                        <option value="0">0 - Not Applicable</option>
+                                        <option value="4">4 - Very Satisfied</option>
+                                        <option value="3">3 - Satisfied</option>
+                                        <option value="2">2 - Dissatisfied</option>
+                                        <option value="1">1 - Very Dissatisfied</option>
+                                    </select>
+                                </td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>Communicates learning outcomes with the class.</td>
+                                <td>
+                                    <select class="form-select">
+                                        <option value="0">0 - Not Applicable</option>
+                                        <option value="4">4 - Very Satisfied</option>
+                                        <option value="3">3 - Satisfied</option>
+                                        <option value="2">2 - Dissatisfied</option>
+                                        <option value="1">1 - Very Dissatisfied</option>
+                                    </select>
+                                </td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td><h6 class="ms-3 my-1">RELATIONAL SKILLS</h6></td>
+                                <td></td>
+                                <td></td>
+
+                            </tr>
+                            <tr>
+                                <td>Communicates learning outcomes with the class.</td>
+                                <td>
+                                    <select class="form-select">
+                                        <option value="0">0 - Not Applicable</option>
+                                        <option value="4">4 - Very Satisfied</option>
+                                        <option value="3">3 - Satisfied</option>
+                                        <option value="2">2 - Dissatisfied</option>
+                                        <option value="1">1 - Very Dissatisfied</option>
+                                    </select>
+                                </td>
+                                <td>0</td>
+                            </tr>
+
+                            <tr>
+                                <td><h6 class="ms-3 my-1">THE SUBJECT</h6></td>
+                                <td></td>
+                                <td></td>
+
+                            </tr>
+                            <tr>
+                                <td>Communicates learning outcomes with the class.</td>
+                                <td>
+                                    <select class="form-select">
+                                        <option value="0">0 - Not Applicable</option>
+                                        <option value="4">4 - Very Satisfied</option>
+                                        <option value="3">3 - Satisfied</option>
+                                        <option value="2">2 - Dissatisfied</option>
+                                        <option value="1">1 - Very Dissatisfied</option>
+                                    </select>
+                                </td>
+                                <td>0</td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+    
+                <div class="modal-footer">
+                    <button class="button" >Done</button>
+                </div>
+        </div>
+    
+            </div>
+        </div>
+    </div>
+</div>

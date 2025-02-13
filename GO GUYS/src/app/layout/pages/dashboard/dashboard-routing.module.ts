@@ -7,6 +7,7 @@ import { DistributionComponent } from './distribution/distribution.component';
 import { OnboardingReportComponent } from './onboarding-report/onboarding-report.component';
 import { OffboardingReportComponent } from './offboarding-report/offboarding-report.component';
 import { AuditLogsComponent } from './audit-logs/audit-logs.component';
+import { EvaluationComponent } from './evaluation/evaluation.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'onboarding-report', component: OnboardingReportComponent},
   {path: 'offboarding-report', component: OffboardingReportComponent},
   {path: 'audit-logs', component: AuditLogsComponent},
+  {path: 'evaluation', component: EvaluationComponent},
   {path: 'distribution', loadChildren: () => import('./distribution/distribution.module').then(m => m.DistributionModule)},
 ];
 
