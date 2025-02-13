@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { Employee } from '../models/employee.model';
 
 @Injectable({
@@ -14,27 +13,8 @@ export class OnboardService {
   constructor(
     private firestore: AngularFirestore,
     private storage: AngularFireStorage
-  ) { }
+  ) {}
 
-  // Upload image to Firebase Storage
-  async uploadImage(file: File): Promise<string> {
-    const filePath = `${this.basePath}/${new Date().getTime()}_${file.name}`;
-    const storageRef = this.storage.ref(filePath);
-    const uploadTask = this.storage.upload(filePath, file);
-
-    return new Promise((resolve, reject) => {
-      uploadTask.snapshotChanges().pipe(
-        finalize(() => {
-          storageRef.getDownloadURL().subscribe({
-            next: (downloadUrl) => resolve(downloadUrl),
-            error: (error) => reject(error)
-          });
-        })
-      ).subscribe();
-    });
-  }
-
-  // Add new employee
   async addEmployee(employee: Employee, imageFile?: File): Promise<string> {
     try {
       if (imageFile) {
@@ -47,38 +27,53 @@ export class OnboardService {
         createdAt: new Date()
       });
 
+      this.logAudit({
+        email: employee.email,
+        action: 'EMPLOYEE_ONBOARDED',
+        timestamp: new Date(),
+        details: `Employee ${employee.name} onboarded successfully`
+      });
+
       return docRef.id;
-    } catch (error) {
-      console.error('Error adding employee:', error);
-      throw error;
+    } catch (addError: unknown) {
+      if (addError instanceof Error) {
+        console.error('Error adding employee:', addError);
+
+        this.logAudit({
+          email: employee.email,
+          action: 'ONBOARDING_FAILED',
+          timestamp: new Date(),
+          details: `Failed to onboard employee ${employee.name}: ${addError.message}`
+        });
+      } else {
+        console.error('Unknown error:', addError);
+      }
+      throw addError;
     }
   }
 
-  // Get all employees
-  getEmployees(): Observable<Employee[]> {
-    return this.firestore.collection<Employee>(this.basePath)
-      .snapshotChanges()
-      .pipe(
-        map(actions => actions.map(a => {
-          const data = a.payload.doc.data() as Employee;
-          const id = a.payload.doc.id;
-          return { id, ...data };
-        }))
-      );
+  private async uploadImage(file: File): Promise<string> {
+    const filePath = `${this.basePath}/${new Date().getTime()}_${file.name}`;
+    const storageRef = this.storage.ref(filePath);
+    const uploadTask = this.storage.upload(filePath, file);
+
+    return new Promise((resolve, reject) => {
+      uploadTask.snapshotChanges().pipe(
+        finalize(async () => {
+          try {
+            const downloadUrl = await storageRef.getDownloadURL().toPromise();
+            resolve(downloadUrl);
+          } catch (uploadError) {
+            reject(uploadError);
+          }
+        })
+      ).subscribe();
+    });
   }
 
-  // Get employee by ID
-  getEmployeeById(id: string): Observable<Employee | undefined> {
-    return this.firestore.doc<Employee>(`${this.basePath}/${id}`).valueChanges();
-  }
-
-  // Update employee
-  updateEmployee(id: string, employee: Partial<Employee>): Promise<void> {
-    return this.firestore.doc(`${this.basePath}/${id}`).update(employee);
-  }
-
-  // Delete employee
-  deleteEmployee(id: string): Promise<void> {
-    return this.firestore.doc(`${this.basePath}/${id}`).delete();
+  private logAudit(log: { email: string; action: string; timestamp: Date; details: string }) {
+    this.firestore.collection('auditLogs').add(log)
+      .then(() => console.log('Audit Log recorded:', log))
+      .catch(logError => console.error('Error logging event:', logError));
   }
 }

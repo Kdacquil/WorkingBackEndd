@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class OffboardingReportService {
 
   constructor(private firestore: AngularFirestore) {}
-    
+
       getEmployees(): Observable<any[]> {
         return this.firestore.collection('offboarding').valueChanges();
       }

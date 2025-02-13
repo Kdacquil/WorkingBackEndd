@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { map } from 'rxjs/operators';
 import { OffboardService } from '../../../../services/offboard.service';
 
 @Component({
@@ -11,7 +11,8 @@ import { OffboardService } from '../../../../services/offboard.service';
 })
 export class OffboardComponent implements OnInit {
   searchQuery: string = '';
-  searchResults: any[] = [];
+  employees: any[] = [];
+  filteredEmployees: any[] = [];
   employeeId: string = '';
   employeeName: string = '';
   profileImageUrl: string = 'picpro.jpg';
@@ -20,7 +21,6 @@ export class OffboardComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private offboardService: OffboardService,
-    private auth: AngularFireAuth,
     private firestore: AngularFirestore
   ) {
     this.offboardForm = this.fb.group({
@@ -28,64 +28,72 @@ export class OffboardComponent implements OnInit {
       personalEmail: ['', [Validators.required, Validators.email]],
       exitInterview: ['', Validators.required],
       automatedNotification: ['', Validators.required],
-      clearanceFileUrl: [''],
-      certificationFileUrl: ['']
+      clearanceStatus: ['', Validators.required],
+      certificationStatus: ['', Validators.required]
     });
   }
 
-  ngOnInit() {}
-
-  // Search Employees in Firestore (Only Shows When Typing)
-  searchEmployees() {
-    if (this.searchQuery.trim() !== '') {
-      this.firestore.collection('employees', ref => ref
-        .orderBy('name')
-        .startAt(this.searchQuery)
-        .endAt(this.searchQuery + '\uf8ff'))
-        .valueChanges()
-        .subscribe(results => {
-          this.searchResults = results;
-        });
-    } else {
-      this.searchResults = [];
-    }
+  ngOnInit() {
+    this.fetchEmployees();
   }
 
-  // Select Employee and Auto-Fill Details
+  /** 🔹 Fetch employees from Firestore */
+  fetchEmployees() {
+    this.firestore.collection('employees').snapshotChanges().pipe(
+      map(actions =>
+        actions.map(a => {
+          const data = a.payload.doc.data() as any;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        })
+      )
+    ).subscribe((employees) => {
+      this.employees = employees;
+      this.filteredEmployees = [];
+    });
+  }
+
+  /** 🔹 Search Employees */
+  searchEmployees() {
+    if (this.searchQuery.trim() === '') {
+      this.filteredEmployees = [];
+      return;
+    }
+
+    this.filteredEmployees = this.employees.filter(emp =>
+      emp.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
+  }
+
+  /** 🔹 Select Employee */
   selectEmployee(employee: any) {
     this.employeeId = employee.id;
     this.employeeName = employee.name;
     this.profileImageUrl = employee.profileImageUrl || 'picpro.jpg';
-    this.searchQuery = '';
-    this.searchResults = [];
+    this.searchQuery = employee.name;
+    this.filteredEmployees = [];
   }
 
-  // Handle File Upload
-  handleFileUpload(event: any, fileType: 'clearance' | 'certification') {
-    const file = event.target.files[0];
-    if (file && this.employeeId) {
-      this.offboardService.uploadFile(file, fileType, this.employeeId).subscribe(
-        downloadUrl => {
-          const control = fileType === 'clearance' ? 'clearanceFileUrl' : 'certificationFileUrl';
-          this.offboardForm.patchValue({ [control]: downloadUrl });
-        },
-        error => {
-          console.error('Error uploading file:', error);
-          alert(`Failed to upload ${fileType}.`);
-        }
-      );
-    } else {
-      alert('Invalid file or missing employee ID.');
-    }
-  }
-
-  // Submit Offboarding Data
+  /** 🔹 Submit Form */
   submitForm() {
+    if (!this.employeeId) {
+      alert("Please select an employee before submitting.");
+      return;
+    }
+
     if (this.offboardForm.valid) {
-      alert('Offboarding data submitted successfully!');
-      this.offboardForm.reset();
+      const offboardingData = {
+        employeeId: this.employeeId,
+        employeeName: this.employeeName,
+        profileImageUrl: this.profileImageUrl,
+        ...this.offboardForm.value
+      };
+
+      this.offboardService.saveOffboardingData(this.employeeId, offboardingData)
+        .then(() => alert("Offboarding data saved successfully!"))
+        .catch(error => alert("Failed to save offboarding data: " + error.message));
     } else {
-      alert('Please fill in all required fields');
+      alert("Please fill in all required fields.");
     }
   }
 }

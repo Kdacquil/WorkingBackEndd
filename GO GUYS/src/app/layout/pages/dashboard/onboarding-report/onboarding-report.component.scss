@@ -1,41 +1,41 @@
 .content{
-    margin-left: 260px;
+  margin-left: 260px;
 }
 
 .content h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-    font-size: 2em;
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 2em;
 }
 
 .table-container {
-    overflow-x: auto;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
 }
 
 table th, table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
 }
 
 table th {
-    background-color: maroon;
-    color: white;
-    font-size: 1em;
+  background-color: maroon;
+  color: white;
+  font-size: 1em;
 }
 
 table tr:nth-child(even) {
-    background-color: #f9f9f9;
+  background-color: #f9f9f9;
 }
 
 table tr:hover {
-    background-color: #f1f1f1;
+  background-color: #f1f1f1;
 }

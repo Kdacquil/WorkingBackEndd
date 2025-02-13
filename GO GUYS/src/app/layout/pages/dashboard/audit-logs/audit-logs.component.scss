@@ -141,3 +141,13 @@ table tr:hover {
 }
 
 .none {cursor: none;}
+
+.success {
+  color: green;
+  font-weight: bold;
+}
+
+.failed {
+  color: red;
+  font-weight: bold;
+}

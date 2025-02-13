@@ -1,6 +1,10 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { OffboardingReportService } from '../../../../services/offboarding-report.service';
+import { OffboardingReportService } from '../../../../services/offboard-report.service';
+
+
+
+
 @Component({
   selector: 'app-offboarding-report',
   templateUrl: './offboarding-report.component.html',

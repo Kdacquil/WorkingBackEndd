@@ -1,16 +1,54 @@
 .offboarding-container {
   margin-left: 250px;
-  padding: 40px 20px;
-  box-sizing: border-box;
-  overflow-y: auto;
-  position: relative;
+  padding: 40px;
 }
 
 h4 {
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 20px;
-  font-size: 35px;
+  font-size: 45px;
   font-weight: bold;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 35px;
+}
+
+/* Search Bar */
+.search-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.search-container input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  width: 250px;
+}
+
+/* Search Results */
+.search-results {
+  position: absolute;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  width: 250px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.search-results ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.search-results li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.search-results li:hover {
+  background-color: #f1f1f1;
 }
 
 .form-container {
@@ -27,15 +65,10 @@ h4 {
 }
 
 input, select {
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 16px;
-}
-
-.user-icon {
-  width: 100px;
-  border-radius: 50%;
 }
 
 button {
@@ -52,38 +85,4 @@ button {
 
 button:hover {
   background-color: #333;
-}
-
-/* Search Bar Positioned on the Right */
-.search-container {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 250px;
-}
-
-.search-results {
-  background: white;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 6px;
-  max-height: 200px;
-  overflow-y: auto;
-  position: absolute;
-  width: 100%;
-  z-index: 10;
-  display: none; /* Hides results initially */
-}
-
-.search-container input:focus + .search-results,
-.search-container input:not(:placeholder-shown) + .search-results {
-  display: block; /* Shows results when typing */
-}
-
-.search-item {
-  padding: 10px;
-  cursor: pointer;
-}
-
-.search-item:hover {
-  background: #f1f1f1;
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -8,14 +9,18 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private auth: AngularFireAuth, private router: Router) {}
+  constructor(
+    private auth: AngularFireAuth,
+    private firestore: AngularFirestore,
+    private router: Router
+  ) {}
 
   // ✅ Check if user is authenticated
   isAuthenticated(): Observable<boolean> {
     return this.auth.authState.pipe(map(user => !!user));
   }
 
-  // ✅ Login method (Prevents login if email is not verified)
+  // ✅ Login method with Audit Logging
   async login(email: string, password: string) {
     try {
       if (!email || !password) {
@@ -28,19 +33,23 @@ export class AuthService {
       }
 
       if (!result.user.emailVerified) {
-        await result.user.sendEmailVerification(); // Send verification email
-        await this.auth.signOut(); // Force logout until verified
+        await result.user.sendEmailVerification();
+        await this.auth.signOut();
+        this.logAudit(email, 'LOGIN_FAILED', 'Email not verified.');
         return { success: false, message: 'Email not verified. Verification email sent.' };
       }
 
+      // ✅ Log Successful Login
+      this.logAudit(email, 'LOGIN_SUCCESS', 'User logged in successfully.');
       return { success: true, message: 'Login successful' };
     } catch (error: any) {
-      console.error('Login error:', error);
-      return { success: false, message: this.getAuthErrorMessage(error) };
+      const errorMessage = this.getAuthErrorMessage(error);
+      this.logAudit(email, 'LOGIN_FAILED', errorMessage);
+      return { success: false, message: errorMessage };
     }
   }
 
-  // ✅ Resend email verification
+  // ✅ Resend Email Verification
   async resendVerificationEmail() {
     try {
       const user = await this.auth.currentUser;
@@ -53,6 +62,11 @@ export class AuthService {
       console.error('Error sending verification email:', error);
       return { success: false, message: this.getAuthErrorMessage(error) };
     }
+  }
+
+  // ✅ Get Current User
+  async getCurrentUser(): Promise<any> {
+    return this.auth.currentUser;
   }
 
   // ✅ Logout method
@@ -75,6 +89,72 @@ export class AuthService {
     }
   }
 
+  // ✅ Update User Information
+  async updateUserInfo(updates: { email?: string; password?: string; displayName?: string }) {
+    try {
+      const user = await this.auth.currentUser;
+      if (!user) {
+        return { success: false, message: 'User not found.' };
+      }
+
+      if (updates.email) {
+        await user.updateEmail(updates.email);
+      }
+      if (updates.password) {
+        await user.updatePassword(updates.password);
+      }
+      if (updates.displayName) {
+        await user.updateProfile({ displayName: updates.displayName });
+      }
+
+      // ✅ Log update action
+      this.logAudit(user.email || 'Unknown', 'UPDATE_USER', `Updated fields: ${Object.keys(updates).join(', ')}`);
+
+      return { success: true, message: 'User information updated successfully.' };
+    } catch (error: any) {
+      return { success: false, message: this.getAuthErrorMessage(error) };
+    }
+  }
+
+  // ✅ Delete User Account (with Firestore Cleanup)
+  async deleteUserAccount() {
+    try {
+      const user = await this.auth.currentUser;
+      if (!user) {
+        return { success: false, message: 'User not found.' };
+      }
+
+      const userEmail = user.email || 'Unknown';
+
+      // Remove user from Firestore
+      await this.firestore.collection('users').doc(user.uid).delete();
+
+      // Delete user from Firebase Authentication
+      await user.delete();
+
+      // ✅ Log deletion
+      this.logAudit(userEmail, 'DELETE_USER', 'User account deleted.');
+
+      return { success: true, message: 'User account deleted successfully.' };
+    } catch (error: any) {
+      return { success: false, message: this.getAuthErrorMessage(error) };
+    }
+  }
+
+  // ✅ Log Audit Events to Firestore
+  private logAudit(email: string, action: string, details: string) {
+    const logEntry = {
+      email,
+      action,
+      details,
+      timestamp: new Date()
+    };
+
+    this.firestore.collection('auditLogs').add(logEntry)
+      .then(() => console.log('Audit Log recorded:', logEntry))
+      .catch(error => console.error('Error logging event:', error));
+  }
+
   // ✅ Handle Firebase Authentication Errors
   private getAuthErrorMessage(error: any): string {
     switch (error.code) {
@@ -86,8 +166,10 @@ export class AuthService {
         return 'Wrong password. Please try again.';
       case 'auth/too-many-requests':
         return 'Too many failed attempts. Try again later.';
+      case 'auth/requires-recent-login':
+        return 'This action requires you to log in again.';
       default:
-        return 'Login failed. Please try again.';
+        return 'An error occurred. Please try again.';
     }
   }
 }
