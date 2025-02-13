@@ -11,7 +11,7 @@ import { EvaluationComponent } from './evaluation/evaluation.component';
 
 
 const routes: Routes = [
-  {path: '', redirectTo: 'distribution', pathMatch: 'full'},
+  {path: '', redirectTo: 'employee-info', pathMatch: 'full'},
   {path: 'onboard', component: OnboardComponent},
   {path: 'offboard', component: OffboardComponent},
   {path: 'employee-info', component: EmployeeInfoComponent},
