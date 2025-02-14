@@ -42,7 +42,6 @@ export class EmployeeInfoComponent implements OnInit {
   enableEditing() {
     this.isEditing = true;
   }
-  
 
   saveUpdate() {
     if (this.selectedEmployee.id) {
@@ -52,17 +51,6 @@ export class EmployeeInfoComponent implements OnInit {
           this.isEditing = false;
         })
         .catch(error => console.error('Error updating employee:', error));
-    }
-  }
-
-  deleteEmployee() {
-    if (confirm('Are you sure you want to delete this employee?')) {
-      this.firestore.collection('employees').doc(this.selectedEmployee.id).delete()
-        .then(() => {
-          alert('Employee deleted successfully!');
-          this.closeModal();
-        })
-        .catch(error => console.error('Error deleting employee:', error));
     }
   }
 

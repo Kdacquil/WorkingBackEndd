@@ -1,5 +1,5 @@
 <div class="content">
-  <h1>Onboarding Report</h1>
+  <h1>Offboarding Report</h1>
 
   <!-- Employee Table -->
   <table class="table-container">
@@ -10,6 +10,9 @@
           <th>Exit Interview Status</th>
           <th>Clearance Status</th>
           <th>Certification</th>
+          <th>Recommendation<th>
+          <th>Comments</th>
+          <th>Evaluation</th>
       </tr>
     </thead>
     <tbody>
@@ -19,10 +22,12 @@
         <td><strong>{{ employee.exitInterview }}</strong></td>
         <td><strong>{{ employee.clearanceStatus }}</strong></td>
         <td><strong>{{ employee.certificationStatus }}</strong></td>
+        <td><strong>{{ employee.recommendation}}</strong></td>
+        <td><strong>{{ employee.recommendationComment}}</strong></td>
+        <td><strong>{{ employee.percentage}}</strong></td>
 
-        <!-- <td>
-          <button class="button" (click)="openModal(employee)">View Details</button>
-        </td> -->
+
+
       </tr>
       <tr *ngIf="filteredEmployees?.length === 0">
         <td colspan="2" class="no-data">No employees found.</td>

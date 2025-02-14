@@ -1,7 +1,7 @@
 
 
     <div class="content">
-        <i class="bi bi-arrow-left-short btn btn-outline-dark" (click)="goBack()"></i>
+        <i class="bi bi-arrow-left-short btn btn-outline-dark" (click)="goBack()">return</i>
         <h1>School of Arts and Sciences Employees</h1>
         <div class="table-container">
             <table>
@@ -15,11 +15,40 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr  *ngFor="let employee of filteredEmployees">
-                        <td>{{ employee.name }}</td>
-                        <td>{{ employee.employmentType }}</td>
-                        <td>{{ employee.completedTasks }}</td>
-                        <td>{{ employee.pendingTasks }}</td>
+                    <tr>
+                        <td>Juan T. Pedro</td>
+                        <td>Arts in Communication</td>
+                        <td>Orientation</td>
+                        <td>Contract</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Juan A. Salasar</td>
+                        <td>Science in Psychology</td>
+                        <td>Orientation</td>
+                        <td>Contract</td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td>Jepoy D. Dizon</td>
+                        <td>Arts in Psychology</td>
+                        <td>Orientation</td>
+                        <td>Contract</td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td>Marie C. Tes</td>
+                        <td>Arts in Guidance Counseling</td>
+                        <td>Orientation</td>
+                        <td>Contract</td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td>Kabataan A. Uleym</td>
+                        <td>Doctor of Philosophy in Psychology</td>
+                        <td>Orientation</td>
+                        <td>Contract</td>
+                        <td>No</td>
                     </tr>
                 </tbody>
             </table>

@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { OnboardComponent } from './onboard/onboard.component';
-import { OffboardComponent } from './offboard/offboard.component';
-import { EmployeeInfoComponent } from './employee-info/employee-info.component';
-import { DistributionComponent } from './distribution/distribution.component';
-import { OnboardingReportComponent } from './onboarding-report/onboarding-report.component';
-import { OffboardingReportComponent } from './offboarding-report/offboarding-report.component';
 import { AuditLogsComponent } from './audit-logs/audit-logs.component';
+import { EmployeeInfoComponent } from './employee-info/employee-info.component';
 import { EvaluationComponent } from './evaluation/evaluation.component';
+import { OffboardComponent } from './offboard/offboard.component';
+import { OffboardingReportComponent } from './offboarding-report/offboarding-report.component';
+import { OnboardComponent } from './onboard/onboard.component';
+import { OnboardingReportComponent } from './onboarding-report/onboarding-report.component';
 
 
 const routes: Routes = [

@@ -13,13 +13,16 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { RouterModule } from '@angular/router';
 import { environment } from '../environments/environment';
 import { EmployeesService } from './services/employees.service';
+import { EvaluationService } from './services/evaluation.service';
 import { OffboardService } from './services/offboard.service';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+
 
 
   ],
@@ -33,7 +36,7 @@ import { OffboardService } from './services/offboard.service';
     AngularFireStorageModule,
     RouterModule
   ],
-  providers: [EmployeesService, OffboardService],
+  providers: [EmployeesService, OffboardService, EvaluationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -7,11 +7,16 @@ import { Observable } from 'rxjs';
 })
 export class OnboardingReportService {
 
-
   constructor(private firestore: AngularFirestore) {}
-  
-    getEmployees(): Observable<any[]> {
-      return this.firestore.collection('employees').valueChanges();
-    }
+
+  // Get employees from the employees collection
+  getEmployees(): Observable<any[]> {
+    return this.firestore.collection('employees').valueChanges();
   }
-  
+
+  // Remove employee from onboarding after offboarding
+  removeEmployee(employeeId: string): Promise<void> {
+    return this.firestore.collection('employees').doc(employeeId).delete();
+  }
+}
+
