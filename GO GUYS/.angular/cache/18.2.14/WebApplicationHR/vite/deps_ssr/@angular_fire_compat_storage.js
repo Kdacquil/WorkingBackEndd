@@ -1,32 +1,37 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
-import "./chunk-WLTG5KEO.js";
+import "./chunk-IQDSFVMT.js";
+import {
+  FIREBASE_APP_NAME,
+  FIREBASE_OPTIONS,
+  ɵcacheInstance,
+  ɵfirebaseAppFactory
+} from "./chunk-O57RJK7J.js";
+import {
+  firebase
+} from "./chunk-4ASMHKVJ.js";
+import "./chunk-S3ZTWBBT.js";
 import {
   require_undici
 } from "./chunk-D5NCJWRM.js";
 import {
-  FIREBASE_APP_NAME,
-  FIREBASE_OPTIONS,
   VERSION,
   keepUnstableUntilFirst,
   observeOutsideAngular,
   ɵAngularFireSchedulers,
-  ɵAppCheckInstances,
-  ɵcacheInstance,
-  ɵfirebaseAppFactory
-} from "./chunk-2S6N7PRS.js";
+  ɵAppCheckInstances
+} from "./chunk-WAY57HHL.js";
 import {
   Component,
   FirebaseError,
   SDK_VERSION,
   _registerComponent,
   createMockUserToken,
-  firebase,
   getModularInstance,
   registerVersion
-} from "./chunk-7DHJRVJV.js";
+} from "./chunk-B2TLZR27.js";
 import {
   AsyncPipe
-} from "./chunk-4JLAEOKH.js";
+} from "./chunk-DWO2OSNQ.js";
 import {
   ChangeDetectorRef,
   Inject,
@@ -46,13 +51,13 @@ import {
   ɵɵdefinePipe,
   ɵɵdirectiveInject,
   ɵɵinject
-} from "./chunk-JCK2OIYT.js";
-import {
-  require_cjs
-} from "./chunk-VFW7PX74.js";
+} from "./chunk-HFDO6PGH.js";
 import {
   require_operators
 } from "./chunk-KKWATYV7.js";
+import {
+  require_cjs
+} from "./chunk-VFW7PX74.js";
 import "./chunk-CTUJN5VU.js";
 import {
   __async,

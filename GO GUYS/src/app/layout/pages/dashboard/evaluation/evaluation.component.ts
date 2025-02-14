@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Evaluation } from '../../../../interfaces/evaluation.interface';
 import { EvaluationService } from '../../../../services/evaluation.service';
 import { OnboardingReportService } from '../../../../services/onboarding-report.service';
+import { Timestamp } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-evaluation',
@@ -61,46 +62,110 @@ export class EvaluationComponent implements OnInit {
     );
   }
 
+  // openModal(employee: any) {
+  //   if (!employee?.id) {
+  //     console.error('Employee ID is undefined');
+  //     alert('Employee ID is missing. Please try again.');
+  //     return;
+  //   }
+  //   this.selectedEmployee = { ...employee };
+  //   this.loadEvaluationHistory(employee.id);
+  //   this.evaluationData = {
+  //     employeeId: employee.id,
+  //     employeeName: employee.name,
+  //     criteria: this.evaluationCriteria.map(c => ({ ...c }))
+  //   };
+  // }
+
   openModal(employee: any) {
     if (!employee?.id) {
       console.error('Employee ID is undefined');
       alert('Employee ID is missing. Please try again.');
       return;
     }
+  
     this.selectedEmployee = { ...employee };
     this.loadEvaluationHistory(employee.id);
+  
+    // Ensure criteria ratings and points reset to 0
     this.evaluationData = {
       employeeId: employee.id,
       employeeName: employee.name,
-      criteria: this.evaluationCriteria.map(c => ({ ...c }))
+      criteria: this.evaluationCriteria.map(c => ({
+        ...c,
+        rating: 0,  // Default rating
+        points: 0   // Default points
+      }))
     };
   }
+  
 
   closeModal() {
     this.selectedEmployee = null;
   }
 
+  // loadEvaluationHistory(employeeId: string) {
+  //   if (!employeeId) {
+  //     console.error('Employee ID is undefined');
+  //     alert('Employee ID is missing. Please try again.');
+  //     return;
+  //   }
+  //   this.loading = true;
+  //   this.evaluationService.getEvaluations(employeeId).subscribe((history: Evaluation[]) => {
+  //     this.evaluationHistory = history.map(item => {
+  //       let dateObj = item.date instanceof Date ? item.date : new Date(item.date);
+  //       if (isNaN(dateObj.getTime())) {
+  //         console.error('Invalid date:', item.date);
+  //         dateObj = new Date();
+  //       }
+  //       return {
+  //         ...item,
+  //         date: dateObj
+  //       };
+  //     });
+  //     this.loading = false;
+  //   }, () => this.loading = false);
+  // }
   loadEvaluationHistory(employeeId: string) {
     if (!employeeId) {
       console.error('Employee ID is undefined');
       alert('Employee ID is missing. Please try again.');
       return;
     }
+  
     this.loading = true;
-    this.evaluationService.getEvaluations(employeeId).subscribe((history: Evaluation[]) => {
-      this.evaluationHistory = history.map(item => {
-        let dateObj = item.date instanceof Date ? item.date : new Date(item.date);
-        if (isNaN(dateObj.getTime())) {
-          console.error('Invalid date:', item.date);
-          dateObj = new Date();
-        }
-        return {
-          ...item,
-          date: dateObj
-        };
-      });
-      this.loading = false;
-    }, () => this.loading = false);
+    this.evaluationService.getEvaluations(employeeId).subscribe(
+      (history: Evaluation[]) => {
+        console.log('Received history from Firestore:', history);
+  
+        this.evaluationHistory = history.map(item => {
+          let dateObj: Date;
+        
+          if (item.date instanceof Timestamp) {
+            dateObj = item.date.toDate(); // Convert Firestore Timestamp to JavaScript Date
+          } else if (item.date instanceof Date) {
+            dateObj = item.date; // Already a valid JavaScript Date
+          } else if (typeof item.date === 'string') {
+            dateObj = new Date(item.date); // Convert string to Date
+          } else {
+            console.warn('Invalid date detected:', item.date);
+            dateObj = new Date(0); // Use a default Date instead of null
+          }
+        
+          return {
+            ...item,
+            date: dateObj, // Ensures type remains Date
+          };
+        });
+        
+  
+        this.loading = false;
+      },
+      (error) => {
+        console.error('Error fetching evaluation history:', error);
+        this.loading = false;
+      }
+    );
   }
 
   onRatingChange(criterion: any, event: any) {

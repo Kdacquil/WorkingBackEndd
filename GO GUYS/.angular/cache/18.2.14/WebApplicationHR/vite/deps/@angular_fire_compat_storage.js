@@ -1,25 +1,30 @@
-import "./chunk-NGVKORK2.js";
+import "./chunk-5JD3US6X.js";
 import {
   FIREBASE_APP_NAME,
   FIREBASE_OPTIONS,
+  ɵcacheInstance,
+  ɵfirebaseAppFactory
+} from "./chunk-OMBIFXTP.js";
+import {
+  firebase
+} from "./chunk-VHUNNG2W.js";
+import "./chunk-GNLHRHI4.js";
+import {
   VERSION,
   keepUnstableUntilFirst,
   observeOutsideAngular,
   ɵAngularFireSchedulers,
-  ɵAppCheckInstances,
-  ɵcacheInstance,
-  ɵfirebaseAppFactory
-} from "./chunk-U5B2F46F.js";
+  ɵAppCheckInstances
+} from "./chunk-MUUUORRW.js";
 import {
   Component,
   FirebaseError,
   SDK_VERSION,
   _registerComponent,
   createMockUserToken,
-  firebase,
   getModularInstance,
   registerVersion
-} from "./chunk-3KOMAZYR.js";
+} from "./chunk-QCRSFU4C.js";
 import {
   AsyncPipe
 } from "./chunk-USFZD6TX.js";
@@ -43,8 +48,8 @@ import {
   ɵɵdirectiveInject,
   ɵɵinject
 } from "./chunk-OE7PEGOX.js";
-import "./chunk-P4UHYYRR.js";
 import "./chunk-YSN7JSTZ.js";
+import "./chunk-P4UHYYRR.js";
 import {
   Observable,
   debounceTime,
