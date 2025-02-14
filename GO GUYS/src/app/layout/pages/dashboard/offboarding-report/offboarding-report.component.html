@@ -10,7 +10,7 @@
           <th>Exit Interview Status</th>
           <th>Clearance Status</th>
           <th>Certification</th>
-          <th>Recommendation<th>
+          <th>Recommendation</th>
           <th>Comments</th>
           <th>Evaluation</th>
       </tr>
@@ -25,9 +25,6 @@
         <td><strong>{{ employee.recommendation}}</strong></td>
         <td><strong>{{ employee.recommendationComment}}</strong></td>
         <td><strong>{{ employee.percentage}}</strong></td>
-
-
-
       </tr>
       <tr *ngIf="filteredEmployees?.length === 0">
         <td colspan="2" class="no-data">No employees found.</td>
