@@ -10,7 +10,6 @@ import { Subscription } from 'rxjs';
 })
 export class DistributionComponent implements AfterViewInit, OnDestroy {
   @ViewChild('departmentDistribution') departmentChartRef!: ElementRef;
-  @ViewChild('employmentStatus') employmentChartRef!: ElementRef;
 
   chartDepartment: Chart | null = null;
   chartEmployment: Chart | null = null;
@@ -28,7 +27,6 @@ export class DistributionComponent implements AfterViewInit, OnDestroy {
           setTimeout(() => {
             this.destroyCharts(); // Ensure charts are destroyed before rendering
             this.renderDepartmentDistribution();
-            this.renderEmploymentStatus();
           }, 0);
         }
       }
@@ -38,7 +36,6 @@ export class DistributionComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     if (this.showContent) {
       this.renderDepartmentDistribution();
-      this.renderEmploymentStatus();
     }
   }
 
@@ -65,38 +62,6 @@ export class DistributionComponent implements AfterViewInit, OnDestroy {
             if (elements.length > 0 && this.chartDepartment?.data?.labels) {
               const index = elements[0].index;
               const label = this.chartDepartment.data.labels[index] as string;
-              this.navigateToRoute(label);
-            }
-          }
-        }
-      });
-    }
-  }
-
-  renderEmploymentStatus() {
-    if (this.chartEmployment) {
-      this.chartEmployment.destroy();
-    }
-
-    if (this.employmentChartRef?.nativeElement) {
-      const ctx = this.employmentChartRef.nativeElement as HTMLCanvasElement;
-      this.chartEmployment = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['Full-Time', 'Part-Time', 'Contract', 'Probation'],
-          datasets: [{
-            label: 'Count',
-            data: [60, 25, 15, 10],
-            backgroundColor: ['#FF9800', '#d96459', '#4CAF50', '#f2e394']
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          onClick: (event, elements) => {
-            if (elements.length > 0 && this.chartEmployment?.data?.labels) {
-              const index = elements[0].index;
-              const label = this.chartEmployment.data.labels[index] as string;
               this.navigateToRoute(label);
             }
           }
